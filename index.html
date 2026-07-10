@@ -30,7 +30,8 @@
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  html{overflow-x:hidden}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;
     background-image:radial-gradient(circle at 90% -6%,rgba(224,52,52,.05),transparent 42%),radial-gradient(circle at 2% 104%,rgba(124,58,237,.04),transparent 38%)}
 
   .hero{max-width:900px;margin:0 auto;text-align:center;padding:clamp(28px,5vw,56px) clamp(16px,3vw,24px) clamp(18px,3vw,26px)}
@@ -54,6 +55,15 @@
   .hero{background:#F5F4F0}
   .filterbar{position:sticky;top:0;z-index:100;background:rgba(245,244,240,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);border-bottom:1px solid var(--line);transition:box-shadow .2s}
   .filterbar.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  /* condensed: once scrolled past the full panel, collapse the 3 filter rows into the slim bar */
+  .filterbar.condensed .fb-collapsible{display:none}
+  .filterbar.condensed .ftog{display:inline-flex}
+  .filterbar.condensed.fopen{position:sticky}
+  /* when reopened while condensed, float the rows as an overlay so they don't shove content */
+  .filterbar.condensed.fopen .fb-collapsible{display:flex;position:relative}
+  .filterbar.condensed.fopen .fb-inner{position:relative}
+  .filterbar.condensed.fopen .fb-panel{position:absolute;left:0;right:0;top:100%;background:rgba(245,244,240,.98);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);box-shadow:0 12px 28px rgba(0,0,0,.1);padding:12px clamp(12px,3vw,28px);display:flex;flex-direction:column;gap:8px;z-index:99;max-height:70vh;overflow:auto}
+  .filterbar:not(.condensed) .fb-panel{display:contents}
   .fb-inner{max-width:1320px;margin:0 auto;padding:10px clamp(12px,3vw,28px);display:flex;flex-direction:column;gap:8px}
   .fb-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
   .fb-lab{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--dim2);width:60px;flex-shrink:0}
@@ -257,6 +267,8 @@
     .ftog{display:inline-flex}
     .fb-collapsible{display:none}
     .filterbar.fopen .fb-collapsible{display:flex}
+    .filterbar.fopen .fb-panel{position:absolute;left:0;right:0;top:100%;background:rgba(245,244,240,.98);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);box-shadow:0 12px 28px rgba(0,0,0,.1);padding:12px 16px;display:flex;flex-direction:column;gap:8px;z-index:99;max-height:70vh;overflow:auto}
+    .fb-inner{position:relative}
   }
   .howto{background:#EDECE8;border-top:1px solid var(--line)}
   .ht-inner{max-width:1320px;margin:0 auto;padding:26px clamp(12px,3vw,28px) 28px}
@@ -368,6 +380,7 @@
         <div class="searchw"><span class="si">&#128269;</span><input id="search" placeholder="Search brand, format, lever, trigger&hellip;"></div>
         <button class="awtog" id="awToggle" aria-pressed="false">&#127942; Award cases</button><button class="ftog" id="fToggle" aria-expanded="false">Filters<span class="fcount" id="fCount" hidden>0</span><span class="fchev">&#9662;</span></button>
       </div>
+      <div class="fb-panel">
       <div class="fb-row fb-collapsible">
         <span class="fb-lab">Platform</span>
         <div class="fb-scroll" id="pfFilters"></div>
@@ -379,6 +392,7 @@
       <div class="fb-row fb-collapsible">
         <span class="fb-lab">Format</span>
         <div class="fb-scroll" id="fmtFilters"></div>
+      </div>
       </div>
     </div>
   </div>
@@ -887,7 +901,20 @@ function buildFilters(){
   wire(pf,'data-p','pf');wire(vf,'data-v','vert');wire(ff,'data-t','fmt');
 }
 document.getElementById('search').addEventListener('input',function(e){state.q=e.target.value;render();});
-window.addEventListener('scroll',function(){document.getElementById('filterbar').classList.toggle('scrolled',window.scrollY>140);});
+window.addEventListener('scroll',function(){
+  var fb=document.getElementById('filterbar');
+  var y=window.scrollY;
+  fb.classList.toggle('scrolled',y>60);
+  var cond=y>150;
+  fb.classList.toggle('condensed',cond);
+  if(!cond&&fb.classList.contains('fopen')){fb.classList.remove('fopen');document.getElementById('fToggle').setAttribute('aria-expanded','false');}
+});
+document.addEventListener('click',function(e){
+  var fb=document.getElementById('filterbar');
+  if(fb.classList.contains('condensed')&&fb.classList.contains('fopen')&&!fb.contains(e.target)){
+    fb.classList.remove('fopen');document.getElementById('fToggle').setAttribute('aria-expanded','false');
+  }
+});
 document.getElementById('fToggle').onclick=function(){var fb=document.getElementById('filterbar');var open=fb.classList.toggle('fopen');this.setAttribute('aria-expanded',open);};
 document.getElementById('awToggle').onclick=function(){state.awardonly=!state.awardonly;this.setAttribute('aria-pressed',state.awardonly);this.classList.toggle('on',state.awardonly);render();};
 function updFCount(){var n=(state.pf!=='all'?1:0)+(state.vert!=='all'?1:0)+(state.fmt!=='all'?1:0);var el=document.getElementById('fCount');if(el){el.hidden=!n;el.textContent=n;}}

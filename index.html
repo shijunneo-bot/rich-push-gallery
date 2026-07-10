@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="https://clevertap.com/wp-content/uploads/2023/08/apple-touch-icon-1.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Serif+JP:wght@500;700&family=Caveat:wght@500;600;700&family=Permanent+Marker&display=swap');
   :root{
     /* warm paper stock: deeper cream, warm off-white card, ink-brown text */
     --paper:#EFE9DC;--paper2:#E6DFCE;--card:#FBF8F1;--card2:#F5F0E4;
@@ -29,6 +29,7 @@
     --both:#6D3FC4;--both-light:rgba(109,63,196,0.11);
     --beta:#9A5B12;--moment:#D89A3B;
     --head:'DM Serif Display',Georgia,serif;--body:'DM Sans',system-ui,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+    --hand:'Caveat',cursive;--marker:'Permanent Marker',cursive;
     --r:12px;
     --t-xs:11px;--t-sm:12.5px;--t-base:15px;--t-md:17px;--t-lg:21px;--t-xl:28px;--t-2xl:38px;--t-3xl:54px;--t-4xl:72px;--t-5xl:104px;
     --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;--s9:96px;
@@ -48,31 +49,64 @@
   body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;
     background-image:radial-gradient(circle at 90% -6%,rgba(224,52,52,.05),transparent 42%),radial-gradient(circle at 2% 104%,rgba(124,58,237,.04),transparent 38%)}
 
-  .hero{max-width:920px;margin:0 auto;text-align:center;padding:clamp(36px,6vw,72px) clamp(16px,3vw,24px) clamp(20px,3vw,30px)}
+  .hero{max-width:1120px;margin:0 auto;position:relative;padding:clamp(40px,6vw,84px) clamp(18px,4vw,40px) clamp(24px,3vw,34px);overflow:hidden}
+  .hero-inner{position:relative;z-index:2;max-width:900px}
+  /* kanji graphic accent, ukiyo-e-modern: large, faint, sitting to the right like the reference's 織田信長 */
+  .jp-kanji{position:absolute;top:clamp(-10px,-1vw,0px);right:clamp(-14px,1vw,40px);z-index:1;font-family:'Noto Serif JP',var(--head);
+    font-size:clamp(180px,32vw,420px);line-height:.8;color:var(--ink);opacity:.05;pointer-events:none;user-select:none;writing-mode:vertical-rl;font-weight:700;animation:kanjidrift 14s ease-in-out infinite}
+  @keyframes kanjidrift{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
   .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.16em;text-transform:uppercase;
-    color:var(--ct-ink);background:var(--ct-light);border:1px solid rgba(212,45,45,.2);border-radius:100px;padding:6px 16px;margin-bottom:clamp(18px,3vw,28px);max-width:100%;overflow-wrap:anywhere}
+    color:var(--ct-ink);background:var(--ct-light);border:1px solid rgba(198,47,38,.2);border-radius:100px;padding:6px 16px;margin-bottom:clamp(16px,2.4vw,22px);max-width:100%;overflow-wrap:anywhere}
   .eyebrow .d{width:6px;height:6px;border-radius:50%;background:var(--ct);flex-shrink:0}
-  h1.ht{font-family:var(--head);font-weight:400;font-size:clamp(44px,9vw,104px);line-height:0.98;letter-spacing:-.03em;max-width:14ch;margin:0 auto}
+  /* ukiyo-e counter row: mono micro-labels bracketed by a keyline, like the site's 01 / 05 */
+  .hero-counter{display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--mono);font-size:var(--t-xs);
+    letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border-top:1px solid var(--line-ink);border-bottom:1px solid var(--line-ink);
+    padding:8px 2px;margin-bottom:clamp(20px,3vw,32px);max-width:640px}
+  h1.ht{font-family:var(--head);font-weight:400;font-size:clamp(40px,8.5vw,100px);line-height:0.96;letter-spacing:-.03em;margin:0;display:flex;flex-direction:column}
+  h1.ht .hl{display:block}
   h1.ht .em{font-style:italic;color:var(--ct)}
-  .hsub{font-size:clamp(14px,1.5vw,var(--t-md));color:var(--ink2);max-width:58ch;margin:clamp(18px,2.2vw,26px) auto 0;line-height:1.6}
-  /* broadsheet rule + dateline stat row */
-  .hstats{display:flex;justify-content:center;flex-wrap:wrap;margin-top:clamp(26px,3.5vw,40px);padding-top:clamp(22px,3vw,30px);border-top:2px solid var(--ink);position:relative}
-  .hstats::before{content:'';position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:56px;height:4px;background:var(--ct)}
-  .stat{display:flex;flex-direction:column;align-items:center;padding:2px clamp(16px,3.5vw,34px);border-right:1px solid var(--line)}
-  .stat:last-child{border-right:none}
+  .hsub{font-size:clamp(14px,1.5vw,var(--t-md));color:var(--ink2);max-width:56ch;margin:clamp(20px,2.4vw,28px) 0 0;line-height:1.6}
+  /* handwritten margin annotation: the "annotated by hand" signature */
+  .hero-note{display:flex;align-items:flex-start;gap:6px;margin:14px 0 0;max-width:440px}
+  .hero-note .hn-arrow{flex-shrink:0;margin-top:-6px;transform:rotate(-8deg)}
+  .hn-text{font-family:var(--hand);font-size:clamp(20px,2.2vw,27px);line-height:1.05;color:var(--ct-ink);transform:rotate(-2deg);transform-origin:left center}
+  .hn-text em{font-style:normal;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:2px}
+  /* broadsheet rule + dateline stat row, now left-anchored */
+  .hstats{display:flex;flex-wrap:wrap;margin-top:clamp(26px,3.5vw,40px);padding-top:clamp(22px,3vw,30px);border-top:2px solid var(--ink);position:relative;max-width:640px}
+  .hstats::before{content:'';position:absolute;top:-2px;left:0;width:56px;height:4px;background:var(--ct)}
+  .stat{display:flex;flex-direction:column;align-items:flex-start;padding:2px clamp(20px,3.5vw,38px) 2px 0;margin-right:clamp(16px,3vw,30px);border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none;margin-right:0}
   .stat .n{font-family:var(--head);font-size:clamp(30px,3.6vw,var(--t-2xl));line-height:1;color:var(--ink);font-feature-settings:'tnum' 1}
-  .stat .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-top:8px;display:flex;align-items:center;gap:5px;text-align:center}
+  .stat .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-top:8px;display:flex;align-items:center;gap:5px;text-align:left}
   .stat .l .dt{font-size:7px}.dt.r{color:var(--ct)}.dt.g{color:var(--render)}.dt.p{color:var(--lever)}.dt.b{color:var(--ios)}
 
   html{color-scheme:only light}
   body{color-scheme:only light}
-  html,body{background:#EFE9DC !important}
+  html{background:transparent !important}
+  body{background:#EFE9DC !important}
   /* warm paper base + soft vignette so the stock reads as printed, not a flat fill */
-  body::before{content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;
+  body::before{content:'';position:fixed;inset:0;z-index:-3;pointer-events:none;
     background:radial-gradient(120% 80% at 50% -10%,#F4EFE4 0%,#EFE9DC 45%,#E7DFCF 100%)}
-  /* visible tooth: warm fractal grain, now perceptible (was ~2%, now reads) */
-  body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.85;mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.36 0 0 0 0 0.30 0 0 0 0 0.22 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  /* washi tooth: warm fractal grain, layered fine + coarse for a real fibre feel */
+  body::after{content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.9;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.34 0 0 0 0 0.28 0 0 0 0 0.20 0 0 0 0.11 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  /* seigaiha (overlapping waves): a quiet Japanese motif, kept very faint so it reads as considered paper, not theme */
+  .jp-motif{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.06;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cg fill='none' stroke='%232E2418' stroke-width='1.5'%3E%3Cpath d='M0 60 A30 30 0 0 1 60 60 A30 30 0 0 1 120 60'/%3E%3Cpath d='M0 60 A20 20 0 0 1 40 60 A20 20 0 0 1 80 60 A20 20 0 0 1 120 60'/%3E%3Cpath d='M0 60 A10 10 0 0 1 20 60 A10 10 0 0 1 40 60 A10 10 0 0 1 60 60 A10 10 0 0 1 80 60 A10 10 0 0 1 100 60 A10 10 0 0 1 120 60'/%3E%3Cpath d='M-60 30 A30 30 0 0 1 0 30 A30 30 0 0 1 60 30 A30 30 0 0 1 120 30 A30 30 0 0 1 180 30'/%3E%3Cpath d='M-60 30 A20 20 0 0 1 -20 30 A20 20 0 0 1 20 30 A20 20 0 0 1 60 30 A20 20 0 0 1 100 30 A20 20 0 0 1 140 30'/%3E%3C/g%3E%3C/svg%3E");background-size:168px 84px;
+    animation:motifdrift 90s linear infinite}
+  @keyframes motifdrift{from{background-position:0 0}to{background-position:168px 84px}}
+  /* floating hand-drawn doodles: faint ink marks that bob slowly in the far background */
+  .doodles{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .doodle{position:absolute;color:var(--ink);opacity:.13;will-change:transform}
+  .doodle svg{display:block}
+  .doodle.d1{top:14%;left:6%;animation:bob1 13s ease-in-out infinite}
+  .doodle.d2{top:32%;right:8%;animation:bob2 17s ease-in-out infinite}
+  .doodle.d3{top:58%;left:10%;animation:bob1 15s ease-in-out infinite 1s}
+  .doodle.d4{top:72%;right:12%;animation:bob2 19s ease-in-out infinite 2s}
+  .doodle.d5{top:45%;left:47%;animation:bob1 21s ease-in-out infinite}
+  .doodle.d6{top:88%;right:34%;animation:bob2 16s ease-in-out infinite 1.5s}
+  @keyframes bob1{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-16px) rotate(3deg)}}
+  @keyframes bob2{0%,100%{transform:translateY(0) rotate(5deg)}50%{transform:translateY(-20px) rotate(-3deg)}}
   .hero{background:transparent}
   .filterbar{position:sticky;top:0;z-index:100;background:rgba(239,233,220,.90);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);border-bottom:1px solid var(--line-ink);transition:box-shadow .2s}
   .filterbar.scrolled{box-shadow:0 4px 20px rgba(42,35,28,.08)}
@@ -103,13 +137,15 @@
   .count-bar{max-width:1320px;margin:0 auto;padding:14px clamp(14px,3vw,28px) 0;font-family:var(--mono);font-size:11px;color:var(--dim2)}
 
   .gridwrap{max-width:1320px;margin:0 auto;padding:0 clamp(12px,3vw,28px) 60px}
-  .sec-head{margin:clamp(36px,5vw,56px) 0 18px}
+  .sec-head{margin:clamp(40px,5vw,60px) 0 18px;padding-top:14px;border-top:2px solid var(--ink);position:relative}
+  /* ukiyo-e double-keyline: a hairline sits just below the heavy rule, echoing the reference's border designs */
+  .sec-head::after{content:'';position:absolute;top:4px;left:0;right:0;height:1px;background:var(--line-ink)}
+  .sec-head::before{content:'';position:absolute;top:-2px;left:0;width:48px;height:4px;background:var(--ct);z-index:1}
   .sec-titlerow{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-  .sec-label{font-family:var(--head);font-size:clamp(24px,3.2vw,34px);color:var(--ink);letter-spacing:-.015em;line-height:1.05;margin:0;font-weight:400;position:relative;padding-left:16px}
-  .sec-label::before{content:'';position:absolute;left:0;top:.18em;bottom:.18em;width:4px;border-radius:2px;background:var(--ct)}
-  .sec-count{font-family:var(--mono);font-size:10px;color:var(--dim);border:1px solid var(--line);border-radius:5px;padding:2px 9px;font-feature-settings:'tnum' 1}
+  .sec-label{font-family:var(--head);font-size:clamp(24px,3.2vw,34px);color:var(--ink);letter-spacing:-.015em;line-height:1.05;margin:0;font-weight:400}
+  .sec-count{font-family:var(--mono);font-size:10px;color:var(--dim);border:1px solid var(--line-ink);border-radius:5px;padding:2px 9px;font-feature-settings:'tnum' 1}
   .sec-desc{font-size:var(--t-sm);color:var(--dim);margin-top:6px;max-width:82ch;line-height:1.6}
-  .sec-line{height:1px;background:var(--line);margin-top:14px}
+  .sec-line{display:none}
   .gapnote{margin-top:14px;background:rgba(180,83,9,.05);border:1px dashed rgba(180,83,9,.35);border-radius:10px;padding:10px 13px;font-size:12px;color:#8a5a12;line-height:1.55;display:flex;gap:8px}
   .gapnote b{color:#6d4610;font-weight:600}
   .gapnote .gi{flex-shrink:0}
@@ -121,14 +157,21 @@
   .card:hover{transform:translate(-2px,-4px);box-shadow:var(--sh3)}
   .card:focus-visible{transform:translate(-2px,-4px);box-shadow:var(--sh3),var(--focus-ring)}
   .card.hide{display:none}
-  .mock{position:relative;background:linear-gradient(160deg,#20303a,#0e1a22 60%,#161f2b);padding:16px 16px 18px;overflow:hidden}
+  .mock{position:relative;background:linear-gradient(160deg,#20303a,#0e1a22 60%,#161f2b);padding:16px 16px 18px;overflow:hidden;min-height:360px;display:flex;flex-direction:column}
   .mock::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 12%,rgba(142,124,255,.2),transparent 45%),radial-gradient(circle at 15% 90%,rgba(232,169,59,.13),transparent 42%);pointer-events:none}
-  .outcome{position:absolute;top:12px;left:12px;z-index:5;font-family:var(--mono);font-size:9px;font-weight:600;padding:3px 9px;border-radius:5px;letter-spacing:.03em}
+  .outcome{position:absolute;top:12px;left:12px;z-index:5;font-family:var(--mono);font-size:9px;font-weight:600;padding:3px 9px;border-radius:5px;letter-spacing:.03em;max-width:52%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .ob-award{background:rgba(180,83,9,.22);color:#F6C560;border:1px solid rgba(180,83,9,.4)}
+  /* hand-stamped award seal sticker, tilted like a scrapbook stamp */
+  .award-seal{position:absolute;bottom:10px;right:10px;z-index:6;width:62px;height:62px;transform:rotate(-11deg);filter:drop-shadow(2px 3px 3px rgba(42,35,28,.3));animation:sealfloat 6s ease-in-out infinite}
+  @keyframes sealfloat{0%,100%{transform:rotate(-11deg) translateY(0)}50%{transform:rotate(-9deg) translateY(-3px)}}
+  .award-seal svg{width:100%;height:100%;display:block}
+  .award-seal-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:var(--marker);font-size:11px;line-height:.95;color:#FDECC9;text-align:center;text-transform:uppercase;letter-spacing:.02em;padding-bottom:3px}
   .ob-drama{background:rgba(124,58,237,.2);color:#C9B4FF;border:1px solid rgba(124,58,237,.4)}
-  .os-badge{position:absolute;top:12px;right:12px;z-index:5;font-family:var(--mono);font-size:8px;font-weight:600;padding:3px 8px;border-radius:5px;letter-spacing:.04em;color:rgba(255,255,255,.85);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16)}
-  .lockmini{margin-top:22px;position:relative;z-index:2}
-  .lm-time{text-align:center;color:#fff;font-family:var(--head);font-size:30px;line-height:1;margin-bottom:2px}
+  .os-badge{position:absolute;top:12px;right:12px;z-index:5;font-family:var(--mono);font-size:8px;font-weight:600;padding:3px 8px;border-radius:5px;letter-spacing:.04em;color:rgba(255,255,255,.85);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);max-width:44%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* lock screen: clock pinned top, notification pushed to the bottom so every card is the same height */
+  .lockmini{margin-top:auto;position:relative;z-index:2}
+  .lm-time{text-align:center;color:#fff;font-family:var(--head);font-size:30px;line-height:1;margin-bottom:2px;margin-top:18px}
   .lm-date{text-align:center;color:rgba(255,255,255,.65);font-size:10px;margin-bottom:12px;font-family:var(--body)}
 
   .noti{background:rgba(22,30,36,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.09);border-radius:16px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.4)}
@@ -374,15 +417,32 @@
 </style>
 </head>
 <body>
+  <div class="jp-motif" aria-hidden="true"></div>
+  <div class="doodles" aria-hidden="true">
+    <span class="doodle d1"><svg width="54" height="54" viewBox="0 0 54 54" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 Q14 26 12 48"/><path d="M36 6 Q32 26 30 48"/><path d="M6 20 Q26 16 48 15"/><path d="M6 38 Q26 34 48 33"/></svg></span>
+    <span class="doodle d2"><svg width="46" height="46" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M9 8 Q24 24 38 39"/><path d="M38 8 Q24 24 9 39"/></svg></span>
+    <span class="doodle d3"><svg width="58" height="58" viewBox="0 0 58 58" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M29 5 L35 22 L53 22 L38 33 L44 51 L29 40 L14 51 L20 33 L5 22 L23 22 Z"/></svg></span>
+    <span class="doodle d4"><svg width="60" height="40" viewBox="0 0 60 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M4 20 Q12 6 20 20 T36 20 T52 20"/></svg></span>
+    <span class="doodle d5"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M24 42 C10 42 6 30 12 22 C17 15 30 15 32 24 C34 31 26 34 23 29 C21 26 25 23 27 26"/></svg></span>
+    <span class="doodle d6"><svg width="64" height="34" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17 Q30 8 56 16"/><path d="M46 6 L58 16 L46 27"/></svg></span>
+  </div>
   <header class="hero">
-    <div class="eyebrow"><span class="d"></span>Rich Push Format Playbook &middot; SJ Neo &times; CleverTap &middot; APAC Edition</div>
-    <h1 class="ht">Every push format, mapped to the <span class="em">moment it earns its place</span>.</h1>
-    <p class="hsub">Twelve verticals, fourteen formats, one hundred sixty-eight live brand examples plus a format library. Every card is a working lock-screen prototype: tap to open it, replay the interaction, and watch the events it fires. Platform support is verified against the CleverTap docs.</p>
-    <div class="hstats">
-      <div class="stat"><span class="n" id="stProto">0</span><span class="l"><span class="dt r">&#9679;</span>Prototypes</span></div>
-      <div class="stat"><span class="n">12</span><span class="l"><span class="dt p">&#9679;</span>Verticals</span></div>
-      <div class="stat"><span class="n" id="stFmt">0</span><span class="l"><span class="dt g">&#9679;</span>Formats</span></div>
-      <div class="stat"><span class="n">2</span><span class="l"><span class="dt b">&#9679;</span>Platforms</span></div>
+    <span class="jp-kanji" aria-hidden="true">報せ</span>
+    <div class="hero-inner">
+      <div class="eyebrow"><span class="d"></span>Rich Push Format Playbook &middot; SJ Neo &times; CleverTap &middot; APAC Edition</div>
+      <div class="hero-counter"><span>the notification, as craft</span><span>報せ &middot; shirase</span></div>
+      <h1 class="ht"><span class="hl">Every push format,</span><span class="hl">mapped to the</span><span class="hl em">moment it earns</span><span class="hl em">its place.</span></h1>
+      <div class="hero-note" aria-hidden="true">
+        <svg class="hn-arrow" width="88" height="60" viewBox="0 0 88 60" fill="none" stroke="var(--ct)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M84 6 C60 2 20 8 8 34"/><path d="M4 22 L8 36 L22 30"/></svg>
+        <span class="hn-text">this is the whole game, not the feature but the <em>moment</em></span>
+      </div>
+      <p class="hsub">Twelve verticals, fourteen formats, one hundred sixty-eight live brand examples plus a format library. Every card is a working lock-screen prototype: tap to open it, replay the interaction, and watch the events it fires. Platform support is verified against the CleverTap docs.</p>
+      <div class="hstats">
+        <div class="stat"><span class="n" id="stProto">0</span><span class="l"><span class="dt r">&#9679;</span>Prototypes</span></div>
+        <div class="stat"><span class="n">12</span><span class="l"><span class="dt p">&#9679;</span>Verticals</span></div>
+        <div class="stat"><span class="n" id="stFmt">0</span><span class="l"><span class="dt g">&#9679;</span>Formats</span></div>
+        <div class="stat"><span class="n">2</span><span class="l"><span class="dt b">&#9679;</span>Platforms</span></div>
+      </div>
     </div>
   </header>
 
@@ -856,14 +916,15 @@ function fcardHTML(f,idx){
 function levClass(i){return ['','warm','blue'][i%3];}
 function cardHTML(c,idx){
   var hasCase=!!CASES[c.v+'|'+c.fmt];
-  var out=(c.award?'<div class="outcome ob-award">\ud83c\udfc6 '+esc(c.outcome||'')+'</div>':'<div class="outcome ob-drama">'+esc(c.outcome||'')+'</div>');
+  var out=(c.award?'<div class="outcome ob-award">\ud83c\udfc6 '+esc(c.outcome||'Award case')+'</div>':'<div class="outcome ob-drama">'+esc(c.outcome||'')+'</div>');
   var f=fmtMeta(c.fmt);
   var noti='<div class="noti">'+notiHTML(c)+'</div>';
   var badges='<span class="sbadge '+(c.status==='active'?'sb-active':'sb-research')+'">'+(c.status==='active'?'\u2705 CT customer signal':'Illustrative')+'</span>'+
     (c.award?'<span class="sbadge sb-award">\ud83c\udfc6 '+esc(c.award)+'</span>':'')+pfBadge(f.platform,f.beta);
   var levs=c.levers.map(function(l,i){return '<span class="lev '+levClass(i)+'">'+esc(l)+'</span>';}).join('');
-  return '<div class="card'+(c.award?' award':'')+'" data-i="'+idx+'" role="button" tabindex="0" aria-label="'+esc(c.brand+', '+f.label+' example. Open live preview.')+'" style="animation-delay:'+((idx%8)*0.03)+'s">'+(c.award?'<div class="ribbon">\ud83c\udfc6 Award case</div>':'')+
-    '<div class="mock">'+out+'<div class="os-badge">'+f.e+' '+esc(f.label)+'</div><div class="lockmini"><div class="lm-time">9:41</div><div class="lm-date">Wednesday, 8 July</div>'+noti+'</div></div>'+
+  var seal=c.award?'<div class="award-seal" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none"><path d="M50 4 L59 13 L71 9 L75 22 L88 25 L84 38 L93 48 L84 58 L88 71 L75 74 L71 87 L59 83 L50 92 L41 83 L29 87 L25 74 L12 71 L16 58 L7 48 L16 38 L12 25 L25 22 L29 9 L41 13 Z" fill="#C62F26" stroke="#8A1810" stroke-width="1.5"/><circle cx="50" cy="48" r="30" fill="none" stroke="#F3D9A0" stroke-width="1.5" stroke-dasharray="3 3"/></svg><span class="award-seal-txt">award<br>case</span></div>':'';
+  return '<div class="card'+(c.award?' award':'')+'" data-i="'+idx+'" role="button" tabindex="0" aria-label="'+esc(c.brand+', '+f.label+' example. Open live preview.')+'" style="animation-delay:'+((idx%8)*0.03)+'s">'+
+    '<div class="mock">'+out+seal+'<div class="os-badge">'+f.e+' '+esc(f.label)+'</div><div class="lockmini"><div class="lm-time">9:41</div><div class="lm-date">Wednesday, 8 July</div>'+noti+'</div></div>'+
     '<div class="cbody"><div class="chead"><div class="brow"><div class="bic" style="background:'+c.color+'">'+(c.flag||c.brand.charAt(0))+'</div>'+
       '<div><div class="bname">'+esc(c.brand)+'</div><div class="bsub">'+esc(f.cat)+'</div></div></div>'+
       '<span class="ttag '+catClass(f.cat)+'">'+f.e+' '+esc(f.label)+'</span></div>'+

@@ -1,0 +1,41 @@
+# Rich Push Notification Format Playbook
+
+> A working reference gallery of 168 rich push notification examples across 14 CleverTap formats and 12 APAC verticals. Every example is a live, interactive lock-screen prototype annotated with the trigger that fires it, the behavioral lever it uses, and the analytics event CleverTap captures. Author: SJ Neo, Enterprise Customer Success Manager. Platform support is verified against the official CleverTap documentation.
+
+## What this is
+
+This is one of ten field guides covering CleverTap's customer engagement channels. It focuses specifically on rich push notifications: the formats available, when each one earns its place, and how to configure it.
+
+## The 14 CleverTap rich push formats
+
+- Standard Push: title, message, small side image, up to two action buttons. The everyday workhorse.
+- Advanced Push: a larger branded creative with deep links and CTAs, one step richer than Standard.
+- Rich Media Single Image: one hero image that expands on the lock screen.
+- Content Slider: a swipeable gallery of frames (iOS).
+- Auto Carousel: images that cycle on their own, no swipe needed.
+- Manual Carousel: user-controlled slides with Back and Next, each carrying its own copy and link.
+- Timer: a live countdown that ticks on the lock screen. Best only when the deadline is real.
+- Text over Image: an edge-to-edge image with the headline set on top of it (Android).
+- Five Icons: a sticky, text-free launcher for a super-app, built for utility (Android).
+- Rating: captures a star rating inline; fires a Rating Submitted event (Android).
+- Product Catalog: up to three products shown inline (Android).
+- Input Box: captures free-text inline; fires an Input Submitted event (Android).
+- Vertical Image with CTA: a portrait creative so tall visuals show without cropping (Android, Private Beta).
+- GIF: an animated frame inside a push (Android 14+, iOS 10+).
+
+## Key principle
+
+The gallery's thesis: a format is not a decision on its own. Each example is tied to a live customer signal, the moment that makes the notification worth sending. The card names that trigger, not just the feature.
+
+## The gallery family (ten CleverTap channel guides by SJ Neo)
+
+- Rich Push: https://shijunneo-bot.github.io/rich-push-gallery/
+- AMP Email: https://shijunneo-bot.github.io/amp-email-gallery/
+- SMS: https://shijunneo-bot.github.io/ct-sms-field-guide/
+- WhatsApp: https://shijunneo-bot.github.io/whatsapp-addon-gallery/
+- Custom HTML In-App: https://shijunneo-bot.github.io/ct-template-gallery/
+- Linked Content: https://shijunneo-bot.github.io/ct-linked-content-gallery/
+- Recommendations and Catalog: https://shijunneo-bot.github.io/ct-recommendations-gallery/
+- Geofence: https://shijunneo-bot.github.io/ct-geofencing-gallery/
+- Reminders: https://shijunneo-bot.github.io/ct-reminders-gallery/
+- Promos: https://shijunneo-bot.github.io/ct-promos-gallery/
